@@ -3,6 +3,7 @@ package com.cos.photogramstart.domain.user;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,6 +25,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //번호 증가 전략이 데이터베이스를 따라간다
 	private int id;
+	@Column(unique = true) //이걸 걸어줘야지 중복값이 안들어간다(중복방지어노테이션)
 	private String username;
 	private String password;
 	
