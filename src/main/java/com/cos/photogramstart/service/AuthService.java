@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor //final DI 처리
 public class AuthService {
 	
-	private final  BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final UserRepository userRepository;
 
 	//어노테이션걸면 이 메소드가 진행될 때 트랜잭션이 작동 Write( Insert, Update, Delete) 할때 트랜잭션을 걸어준다
