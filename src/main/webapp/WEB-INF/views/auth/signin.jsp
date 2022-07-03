@@ -24,7 +24,8 @@
                         <h1><img src="/images/logo.jpg" alt=""></h1>
                         
                         <!--로그인 인풋-->
-                        <form class="login__input" >
+                        <form class="login__input"  action="/auth/signin" method="post">
+                        <!-- 원래 select할때는 get방식을 사용하지만 login은 중요한 정보이므로 post로 진행한다(로그인만 post!!!)  -->
                             <input type="text" name="username" placeholder="유저네임" required="required" />
                             <input type="password" name="password" placeholder="비밀번호" required="required" />
                             <button>로그인</button>

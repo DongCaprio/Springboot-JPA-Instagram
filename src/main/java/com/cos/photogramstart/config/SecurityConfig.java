@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ //설정파일
 		.anyRequest().permitAll() //나머지는 다 허용하겠다.
 		.and()
 		.formLogin() //맨줄의 막혀있는거 들어오면 로그인 페이지를 거치게 하겠다.
-		.loginPage("/auth/signin") //그 로그인 페이지가 바로 " "안의 값이다
+		.loginPage("/auth/signin") //그 로그인 페이지가 바로 " "안의 값이다 //얘는 GET //얘는 로그인창화면
+		.loginProcessingUrl("/auth/signin") //POST //얘는 로그인창화면에서 로그인클릭시 POST로 진행되는 과정. 즉 위와 이건 다른것임
 		.defaultSuccessUrl("/"); //로그인 성공하면 일로간다
 	}
 }
