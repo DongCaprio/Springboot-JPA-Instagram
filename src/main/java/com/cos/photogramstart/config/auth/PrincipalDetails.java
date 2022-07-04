@@ -30,6 +30,15 @@ public class PrincipalDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		Collection<GrantedAuthority> collector = new ArrayList<>(); //어레이리스트의 부모가 컬랙션이므로 어레이리스트를 선언
 		collector.add(()-> {return user.getRole();});
+		/*
+		 * 이게 위에 람다식으로 간단하게 표현할 수 있다.
+		 collector.add(new GrantedAuthority() {
+			@Override
+			public String getAuthority() {
+				// TODO Auto-generated method stub
+				return user.getRole();
+			}
+		});*/
 		return collector;
 	}
 
