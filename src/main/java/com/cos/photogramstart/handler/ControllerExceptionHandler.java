@@ -1,13 +1,12 @@
 package com.cos.photogramstart.handler;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -37,5 +36,10 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) { //?자리에 원래 제네릭을 밑에줄과 동일하게 적어야줘되지만 (지금은Map) 그런데 ?를 넣어주면 알아서 들어가게된다
 		System.out.println("=================나 실행됌??____________");
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(CustomApiException.class) // 모든 customValidationException 시 메소드 발동
+	public ResponseEntity<?> apiException(CustomApiException e) { //?자리에 원래 제네릭을 밑에줄과 동일하게 적어야줘되지만 (지금은Map) 그런데 ?를 넣어주면 알아서 들어가게된다
+		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(), null),HttpStatus.BAD_REQUEST);
 	}
 }
