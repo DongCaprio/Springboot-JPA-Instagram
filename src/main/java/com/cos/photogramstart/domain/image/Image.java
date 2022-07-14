@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 import com.cos.photogramstart.domain.user.User;
@@ -13,28 +15,34 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class image {
-	
+public class Image {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String caption; //
-	private String postImageUrl; //사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장- DB에 그 저장된 경로를 insert
-	
+	private String caption; // 사진설명
+	private String postImageUrl; // 사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장- DB에 그 저장된 경로를 insert
+
+	@JoinColumn(name = "userId")
+	@ManyToOne
 	private User user;
 	
+	//이미지좋아요
+	//댓글 등등 추가로 필요
+	
 	private LocalDateTime createDate;
-	@PrePersist // DB에 INSERT 되기 직전에 실행
+	
+	@PrePersist
 	public void createDate() {
 		this.createDate = LocalDateTime.now();
 	}
-
+	
+	
 }

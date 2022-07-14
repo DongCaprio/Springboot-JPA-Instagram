@@ -21,14 +21,14 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create #create
+      ddl-auto: update #create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
       
   servlet:
     multipart:
-      enabled: true
+      enabled: true #파일을 받겠다 최대 2MB
       max-file-size: 2MB
 
   security:
@@ -37,4 +37,4 @@ spring:
       password: 1234   
 
 file:
-  path: C:/workspace/springbootwork/upload/
+  path: C:/dongj_workspace/springbootwork/upload/ #꼭 마지막에 /가 붙어야된다

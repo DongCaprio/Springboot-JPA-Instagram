@@ -18,7 +18,9 @@
                 <!--사진업로드 로고 end-->
                 
                 <!--사진업로드 Form-->
-                <form class="upload-form" >
+                <form class="upload-form"  action="/image" method="post" enctype="multipart/form-data"> 
+                <!--  위의 enctype="multipart/form-date"는 여러개의 타입을 동시에 전송하고 싶을때 사용함!! -->
+                <!-- byte타입의 데이터, key-value 타입의 데이터 총 2개를 보내야됨 file이 byte타입으로 날아감  -->
                     <input  type="file" name="file"  onchange="imageChoose(this)"/>
                     <div class="upload-img">
                         <img src="/images/person.jpeg" alt="" id="imageUploadPreview" />
@@ -26,7 +28,7 @@
                     
                     <!--사진설명 + 업로드버튼-->
                     <div class="upload-form-detail">
-                   		 <input type="text" placeholder="사진설명" name="caption">
+                   		 <input type="text" placeholder="사진설명" name="caption" />
                         <button class="cta blue">업로드</button>
                     </div>
                     <!--사진설명end-->
