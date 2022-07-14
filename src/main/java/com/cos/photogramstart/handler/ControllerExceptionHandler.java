@@ -23,7 +23,13 @@ public class ControllerExceptionHandler {
 		// 1. 클라이언트 응답시에는 Script가 좋음 (클라이언트 응답받을때)
 		// Ajax통신 - CMRespDto가 더좋음 (개발자가 응답받을때)
 		// Andriod통신 - CMRespDto가 더좋음 (개발자가 응답받을때)
-		return Script.back(e.getErrorMap().toString());
+		
+		//imageController에서 image첨부 안하고 보낼때 throw error를 위해서 분기처리(이땐 errormap을 안날려서 밑의 e.getErrorMap()이 null이어서 널포인트 익셉션나오게됨 그래서 분기!)
+		if(e.getErrorMap() == null) {
+			return Script.back(e.getMessage());
+		}else {
+			return Script.back(e.getErrorMap().toString());
+		}
 	}
 	
 //	public CMRespDto<?> validationException(CustomValidationException e) { //?자리에 원래 제네릭을 밑에줄과 동일하게 적어야줘되지만 (지금은Map) 그런데 ?를 넣어주면 알아서 들어가게된다
