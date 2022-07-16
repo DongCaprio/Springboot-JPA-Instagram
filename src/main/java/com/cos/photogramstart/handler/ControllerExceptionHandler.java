@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -37,6 +38,10 @@ public class ControllerExceptionHandler {
 //	}
 	//위랑비교
 	
+	@ExceptionHandler(CustomException.class) // 모든 customValidationException 시 메소드 발동
+	public String exception(CustomException e) { 
+		return Script.back(e.getMessage());
+	}
 	
 	@ExceptionHandler(CustomValidationApiException.class) // 모든 customValidationException 시 메소드 발동
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) { //?자리에 원래 제네릭을 밑에줄과 동일하게 적어야줘되지만 (지금은Map) 그런데 ?를 넣어주면 알아서 들어가게된다

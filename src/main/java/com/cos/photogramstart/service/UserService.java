@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,16 @@ public class UserService {
 	
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Transactional(readOnly = true) //조회만 할때는(Data변경이 없을때는) readonly=true를 걸어주면 내부연산할것이 줄어든다
+	//select만 할때도 @Transactional을 꼭 붙여주자 reanonly=true
+	public User 회원프로필(int userId) {
+		// SELECT * FROM image WHERE userId = :userId;
+		User userEntity = userRepository.findById(userId).orElseThrow(()->{
+			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
+		});
+		return userEntity;
+	}
 	
 	@Transactional
 	public User 회원수정(int id, User user) {
@@ -33,7 +44,6 @@ public class UserService {
 		userEntity.setWebsite(user.getWebsite());
 		userEntity.setPhone(user.getPhone());
 		userEntity.setGender(user.getGender());
-		
 		return userEntity;
 	} //이때 더티체킹이 일어나서 업데이트가 완료된다
 }

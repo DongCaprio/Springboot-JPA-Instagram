@@ -19,7 +19,8 @@ spring:
     password: cos1234
     
   jpa:
-    open-in-view: true
+    open-in-view: true #view단까지 세션을 open하겠다는뜻! (즉 eager전략이아닌 lazy를 해도 데이터를 가져올 수 있게끔)
+    #원래 세션이 끝나는지점은 응답할때 서비스가 끝나면 세션도 끝나는데 이걸쓰면 컨트롤러 응답이 끝난후 세션이 종료된다
     hibernate:
       ddl-auto: update #create
       naming:
