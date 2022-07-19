@@ -1,4 +1,4 @@
-package com.cos.photogramstart.web.dto.user;
+ package com.cos.photogramstart.web.dto.user;
 
 import javax.validation.constraints.NotBlank;
 
