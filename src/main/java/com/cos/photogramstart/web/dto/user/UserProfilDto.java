@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfilDto { // 내 프로필이 아닌 경우에는 사진등록이 안뜨게 하려고 클래스생성
-	private boolean PageOwnerState;
 	private User user;
+	private boolean PageOwnerState;
 	private int imageCount;
+	private boolean subscribeState;
+	private int subscribeCount;
 }
