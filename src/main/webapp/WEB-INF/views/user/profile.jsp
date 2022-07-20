@@ -3,7 +3,7 @@
 
 <%@ include file="../layout/header.jsp"%>
 
-<!--프로필 섹션-->
+<!--프로필 세션-->
 <section class="profile">
 	<!--유저정보 컨테이너-->
 	<div class="profileContainer">
