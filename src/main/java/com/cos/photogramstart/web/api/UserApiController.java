@@ -42,7 +42,7 @@ public class UserApiController {
 
 	@PutMapping("/api/user/{id}")
 	public CMRespDto<?> update(@PathVariable int id, @Valid UserUpdateDto userUpdateDto, // @Valid 어노테이션을 꼭 붙어줘야지
-																																									// UserUpdateDto클래스의 검증어노테이션
+																																									 // UserUpdateDto클래스의 검증어노테이션
 																																									// @NotBlank등을 검사하게 된다.
 			BindingResult bindingResult, // 꼭 @Valid가 적혀있는 다음 파라메타에 적어야된다(뒤에적어야됨 그래야작동함)
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {

@@ -38,7 +38,7 @@ public class SubscribeService {
 		// 첫번째 물음표 (로그인한 사람의 아이디 => principalId)
 		// 물음표 로그인한 사람의 아이디 => principalId
 		// 마지막 물음표 => pageUserId(내가 보는사람아아디)
-		System.out.println("+++++++++++++++++++++++"+sb);
+		
 		// 쿼리완성
 		Query query = em.createNativeQuery(sb.toString()).setParameter(1, principalId).setParameter(2, principalId)
 				.setParameter(3, pageUserId);
