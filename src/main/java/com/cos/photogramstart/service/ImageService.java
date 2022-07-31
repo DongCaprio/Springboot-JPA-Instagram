@@ -30,6 +30,12 @@ public class ImageService {
 	@Transactional(readOnly = true)
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
 		Page<Image> images = imageRepository.mStory(principalId, pageable);
+		
+		images.forEach((image)->{
+			image.getLikes().forEach((like)->{
+				
+			});
+		});
 		return images;
 	}
 	

@@ -41,9 +41,10 @@ public class Subscribe { //위에@Table은 검색ㄱㄱ, unique를 쌍으로 걸
 
 	private LocalDateTime createDate;
 
-	@PrePersist // DB에 INSERT 되기 직전에 실행
-	public void createDate() {
-		this.createDate = LocalDateTime.now();
-	}
+	// 네이티브 쿼리 사용시 밑에꺼 안들어감 (적어도 무용지물!!)
+	/*	@PrePersist // DB에 INSERT 되기 직전에 실행
+		public void createDate() {
+			this.createDate = LocalDateTime.now();
+		}*/
 
 }

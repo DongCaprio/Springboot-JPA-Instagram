@@ -36,7 +36,7 @@ public class Likes { // N
 	private int id;
 	
 	@JoinColumn(name = "imageId")
-	@ManyToOne //manytoone은 기본전략이 eager / onetomany는 기본이 lazy
+	@ManyToOne //manytoone은 기본전략이 eager / onetomany는 기본이 lazy, lazy면 안가져오다가 getter를 호출할때 정보를 불러온다
 	private Image image; //1개의 이미지는 좋아요 여러개 가능
 	
 	@JoinColumn(name = "userId")
