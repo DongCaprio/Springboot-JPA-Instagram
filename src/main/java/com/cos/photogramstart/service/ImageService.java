@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,12 @@ public class ImageService {
 	
 	@Value("${file.path}") //yml의 file: path 값을 가져온다 (yml다루는 이거 꼭 기억하기)
 	private String uploadFolder;
+	
+	@Transactional(readOnly = true)
+	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
+		Page<Image> images = imageRepository.mStory(principalId, pageable);
+		return images;
+	}
 	
 	@Transactional
 	public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
