@@ -31,9 +31,15 @@ public class ImageService {
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
 		Page<Image> images = imageRepository.mStory(principalId, pageable);
 		
+		// images에 좋아요 상태담기
+		//java 람다식 foreach
+		//향상된 for문을 foreach(변수 -> {})로 더 간단하게 변환할 수 있다
 		images.forEach((image)->{
+			image.setLikeCount(image.getLikes().size());
 			image.getLikes().forEach((like)->{
-				
+				if(like.getUser().getId() == principalId) { // 해당이미지에 좋아요한 사람을 찾아서 현재 로그인한 사람이 좋아요 눌렀는지 비교
+					image.setLikeState(true);
+				}
 			});
 		});
 		return images;

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
 import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.user.User;
@@ -36,10 +38,11 @@ public class Image {
 
 	@JsonIgnoreProperties({"images"}) //user안에있는 images들은 가져오지마!
 	@JoinColumn(name = "userId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 	
 	//이미지좋아요
+	@JsonIgnoreProperties({"image"}) 
 	@OneToMany(mappedBy = "image") //옆에 mappedBy 적으면 "나는 연관관계 주인이 아니에요 포린키 만들지마세요!!!" 라는뜻이다
 	//mappedBy 옆에 image는 뭐냐면 밑에 Likes안에있는 private Image image의 변수이름
 	private List<Likes> likes;
@@ -47,6 +50,12 @@ public class Image {
 	//댓글 등등 추가로 필요
 	
 	private LocalDateTime createDate;
+	
+	@Transient //해당 어노테이션 중요**  이걸 적으면 DB에는 컬럼이 생성되지 않는다
+	private boolean likeState;
+	
+	@Transient //해당 어노테이션 중요**  이걸 적으면 DB에는 컬럼이 생성되지 않는다
+	private int likeCount;
 	
 	@PrePersist
 	public void createDate() {
