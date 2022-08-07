@@ -118,8 +118,6 @@ function profileImageUpload(pageUserId, principalId) {
 			enctype: "multipart/form-data", //jsp form태그안에 enctype을 설정하면 여기에 안적어도 된다
 			dataType: "json"
 		}).done(res => {
-			alert('성공!!!!!!! ')
-			debugger;
 			// 사진 전송 성공시 이미지 변경
 			let reader = new FileReader();
 			reader.onload = (e) => {
