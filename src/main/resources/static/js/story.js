@@ -163,7 +163,7 @@ function addComment(imageId) {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
-	console.log(data);
+	//console.log(data);
 	$.ajax({
 		type:"post",
 		url:"/api/comment",
@@ -171,6 +171,7 @@ function addComment(imageId) {
 		contentType : "application/json; charset=utf-8", /*내가 보내는 데이터는 json타입이다 라는뜻*/
 		dataType :"json"
 	}).done(res=>{
+		debugger;
 		console.log("성공",res);
 	}).fail(error=>{
 		console.log("에러",error);
