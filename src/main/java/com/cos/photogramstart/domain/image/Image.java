@@ -11,9 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.cos.photogramstart.domain.comment.Comment;
 import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -47,7 +49,11 @@ public class Image {
 	//mappedBy 옆에 image는 뭐냐면 밑에 Likes안에있는 private Image image의 변수이름
 	private List<Likes> likes;
 	
-	//댓글 등등 추가로 필요
+	//댓글
+	@OrderBy("id DESC")
+	@OneToMany(mappedBy = "image") //fk는 comment안의 image에 만들어진다는뜻
+	@JsonIgnoreProperties({"image"})
+	private List<Comment> comments;
 	
 	private LocalDateTime createDate;
 	

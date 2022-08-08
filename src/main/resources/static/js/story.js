@@ -60,19 +60,24 @@ function getStoryItem(image) {
 					<p>${image.caption}</p>
 				</div>
 		
-				<div id="storyCommentList-${image.id }">
-		
-					<div class="sl__item__contents__comment" id="storyCommentItem-1"">
+				<div id="storyCommentList-${image.id}">`;
+				
+					image.comments.forEach((comment)=>{
+						item+=`
+						<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 						<p>
-							<b>Lovely :</b> 부럽습니다.
+							<b>${comment.user.username} :</b> ${comment.content}.
 						</p>
 		
 						<button>
 							<i class="fas fa-times"></i>
 						</button>
-		
 					</div>
+						`;
+					});
+					
 		
+		item += `
 				</div>
 		
 				<div class="sl__item__input">
@@ -115,11 +120,11 @@ function toggleLike(imageId) {
 			url: `/api/image/${imageId}/likes`,
 			dataType: "json"
 		}).done(res => {
-			let likeCountStr = $("#storyLikeCount-"+imageId).text();
+			let likeCountStr = $("#storyLikeCount-" + imageId).text();
 			let likeCount = Number(likeCountStr);
 			likeCount++;
-			$("#storyLikeCount-"+imageId).text(likeCount);
-			
+			$("#storyLikeCount-" + imageId).text(likeCount);
+
 			likeIcon.addClass("fas");
 			likeIcon.addClass("active");
 			likeIcon.removeClass("far");
@@ -134,11 +139,11 @@ function toggleLike(imageId) {
 			url: `/api/image/${imageId}/likes`,
 			dataType: "json"
 		}).done(res => {
-			let likeCountStr = $("#storyLikeCount-"+imageId).text();
+			let likeCountStr = $("#storyLikeCount-" + imageId).text();
 			let likeCount = Number(likeCountStr);
 			likeCount--;
-			$("#storyLikeCount-"+imageId).text(likeCount);
-			
+			$("#storyLikeCount-" + imageId).text(likeCount);
+
 			likeIcon.removeClass("fas");
 			likeIcon.removeClass("active");
 			likeIcon.addClass("far");
@@ -165,30 +170,31 @@ function addComment(imageId) {
 	}
 	//console.log(data);
 	$.ajax({
-		type:"post",
-		url:"/api/comment",
-		data :JSON.stringify(data),
-		contentType : "application/json; charset=utf-8", /*내가 보내는 데이터는 json타입이다 라는뜻*/
-		dataType :"json"
-	}).done(res=>{
-		debugger;
-		console.log("성공",res);
-	}).fail(error=>{
-		console.log("에러",error);
+		type: "post",
+		url: "/api/comment",
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8", /*내가 보내는 데이터는 json타입이다 라는뜻*/
+		dataType: "json"
+	}).done(res => {
+		//console.log("성공", res);
+	let comment = res.data;
+	let content = `
+		  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+		    <p>
+		      <b>${comment.user.username} :</b>
+		     ${comment.content}
+		    </p>
+		    <button><i class="fas fa-times"></i></button>
+		  </div>
+	`;
+		commentList.prepend(content);
+		/* append는 뒤에다가 prepend는 앞에다가 넣는것!!!!!!!!! 최신댓글이 위로가려면? prepend*/
+
+	}).fail(error => {
+		console.log("에러", error);
 	});
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content);
-	/* append는 뒤에다가 prepend는 앞에다가 넣는것!!!!!!!!! 최신댓글이 위로가려면? prepend*/
-	commentInput.val("");
+	commentInput.val(""); //인풋 필드 깨끗하게 비워준다
 }
 
 // (5) 댓글 삭제

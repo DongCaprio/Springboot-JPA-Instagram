@@ -34,6 +34,7 @@ public class Comment {
 	private int id;
 	@Column(length = 100, nullable = false)
 	private String content;
+	@JsonIgnoreProperties({"images"})
 	@JoinColumn(name = "userId")
 	@ManyToOne
 	private User user;
