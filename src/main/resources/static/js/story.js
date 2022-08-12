@@ -198,7 +198,8 @@ function addComment(imageId) {
 		/* append는 뒤에다가 prepend는 앞에다가 넣는것!!!!!!!!! 최신댓글이 위로가려면? prepend*/
 
 	}).fail(error => {
-		console.log("에러", error);
+		console.log("에러", error.responseJSON.data.content);
+		alert(error.responseJSON.data.content);
 	});
 
 	commentInput.val(""); //인풋 필드 깨끗하게 비워준다
