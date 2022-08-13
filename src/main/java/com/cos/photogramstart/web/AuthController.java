@@ -44,22 +44,13 @@ public class AuthController {
 		//@ResponseBody 하면 return에 쓰는 String값을 반환함
 		//pom.xml에 추가해야지만 @Valid사용가능
 		//@Valid 붙은 SignupDto에 오류가 발생하면 그 오류를 전부 BindingResult에 모아줌
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-				System.out.println("+++++++++++++++++++++++++++++++++++++++");
-				System.out.println(error.getDefaultMessage());
-				System.out.println("+++++++++++++++++++++++++++++++++++++++");
-			}
-			throw new CustomValidationException("유효성 검사 실패", errorMap);
-		}else {
+		
+		//AOP로 유효성 검사 코드가 실행중(파라미터에 BindingResult가 있으므로)
+		
 			// User <- SignupDto
 			User user = signupDto.toEntitity();
-			User userEntity = authService.회원가입(user);
-			System.out.println(userEntity);
+			authService.회원가입(user);
 			return "auth/signin";
-		}
 	}
 	
 	

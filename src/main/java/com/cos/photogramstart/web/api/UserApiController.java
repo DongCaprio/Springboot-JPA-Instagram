@@ -59,18 +59,10 @@ public class UserApiController {
 			BindingResult bindingResult, // 꼭 @Valid가 적혀있는 다음 파라메타에 적어야된다(뒤에적어야됨 그래야작동함)
 			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-		if (bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for (FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-				//System.out.println(error.getDefaultMessage());
-			}
-			throw new CustomValidationApiException("회원수정 유효성 검사 실패", errorMap);
-		} else {
-			System.out.println(userUpdateDto);
+		//여기도 유효성 검사 AOP해서 들어가있다.(파라미터에 BindingResult가 있으므로!!!!
+		
 			User userEntity = userService.회원수정(id, userUpdateDto.toEntitity());
 			principalDetails.setUser(userEntity); // 세션값 변경!! (유저정보 수정후에 다시 유저정보 들어가서 보면 바뀌도록 세션변경!!)
 			return new CMRespDto<>(1, "회원수정완료", userEntity); //응답시에 userEntity의 모든 getter함수가 호출되고 JSON으로 파싱하여 응답한다.
-		}
 	}
 }

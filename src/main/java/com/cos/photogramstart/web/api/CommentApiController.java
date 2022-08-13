@@ -1,16 +1,11 @@
 package com.cos.photogramstart.web.api;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.comment.Comment;
-import com.cos.photogramstart.handler.ex.CustomValidationApiException;
-import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.CommentService;
 import com.cos.photogramstart.web.dto.CMRespDto;
 import com.cos.photogramstart.web.dto.comment.CommentDto;
@@ -38,13 +31,9 @@ public class CommentApiController {
 			@RequestBody CommentDto commentDto, 
 			BindingResult bindingResult, //바로 @Valid 뒤에 @BindingResult걸기!!
 			@AuthenticationPrincipal PrincipalDetails principalDetails){
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<String, String>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationApiException("유효성 검사 실패", errorMap);
-		}
+		
+		//실제로 여기에 AOP기능으로 유효성 체크 항목이 들어가있다.
+		//ValidationAdvice.java 참고
 		
 		Comment comment = commentService.댓글쓰기(commentDto.getContent(), commentDto.getImageId(), principalDetails.getUser().getId()); //content, imageId, userId
 		return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기 성공",comment),HttpStatus.OK);
