@@ -7,9 +7,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.cos.photogramstart.config.oauth.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @EnableWebSecurity //해당 파일로 시큐리티를 활성화
 @Configuration 		//IOC     
 public class SecurityConfig extends WebSecurityConfigurerAdapter{ //설정파일설정 extends
+	
+	private final OAuth2DetailsService oAuth2DetailsService;
+	
 	
 	@Bean //@Bean을 해주면 위에 @Configuration때문에 SecurityConfig클래스가 IOC에 담길때 @Bean어노테이션을 읽어서 이 메소드의 리턴값을 IOC가 들고있게 된다 
 	public BCryptPasswordEncoder encode() {
@@ -32,6 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ //설정파일
 		.formLogin() //맨줄의 막혀있는거 들어오면 로그인 페이지를 거치게 하겠다.
 		.loginPage("/auth/signin") //그 로그인 페이지가 바로 " "안의 값이다 //얘는 GET //얘는 로그인창화면
 		.loginProcessingUrl("/auth/signin") //POST //얘는 로그인창화면에서 로그인클릭시 POST로 진행되는 과정. 즉 위와 이건 다른것임
-		.defaultSuccessUrl("/"); //로그인 성공하면 일로간다
+		.defaultSuccessUrl("/") //로그인 성공하면 일로간다
+		.and()
+		.oauth2Login()  //form로그인 말고도 oauth2로그인도 할것이다
+		.userInfoEndpoint() //oauth2로그인을 하면 회원정보(최종응답)를 바로 받겠다.
+		.userService(oAuth2DetailsService); //
 	}
 }

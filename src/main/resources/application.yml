@@ -36,6 +36,12 @@ spring:
     user:
       name: test
       password: 1234   
+    oauth2:      client:        registration:
+          facebook:
+            client-id: 593058759023443
+            client-secret: 3ea63159d0cd96ec0f864e8ff8fdd56f
+            scope:            - public_profile
+            - email          
 
 file:
   path: C:/dongj_workspace/springbootwork/upload/ #꼭 마지막에 /가 붙어야된다

@@ -2,24 +2,32 @@ package com.cos.photogramstart.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.cos.photogramstart.domain.user.User;
 
 import lombok.Data;
 
 @Data
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails, OAuth2User{
 
 	private static final long serialVersionUID = 1L;
 
 	//난 유저 오브젝트를 여기에 담고싶음
 	private User user;
 	
+	private Map<String, Object> attributes;
+	
 	// 생성자 생성 //PrincipalDetailsService에서 new 유저를 던져주기위한 생성자
 	public PrincipalDetails(User user) {
+		this.user = user;
+	}
+	// 페북로그인 구분으로인해 오버로딩
+	public PrincipalDetails(User user, Map<String, Object> attributes) {
 		this.user = user;
 	}
 	/* 밑에 메소드들은 UserDetails 상속받으면 알아서 오버라이드 해야되는 것들 */
@@ -81,6 +89,19 @@ public class PrincipalDetails implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	
+	////////////////////////////////// 밑에는 페북로그인 OAuth2User얘 extends해서 생김
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return attributes; //{id:2424242, name:김동진, email:dfdak@naver.com}
+	}
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return (String)attributes.get("name");
 	}
 	
 }
