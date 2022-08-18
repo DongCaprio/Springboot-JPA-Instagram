@@ -48,7 +48,7 @@ public class UserService {
 			Files.write(imageFilePath, profileImageFile.getBytes()); // 1. path, 2. imageFile 3. 생략가능
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		User userEntity = userRepository.findById(principalId).orElseThrow(()->{
 			throw new CustomApiException("유저를 찾을 수 없습니다");
