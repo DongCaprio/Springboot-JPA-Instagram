@@ -50,7 +50,7 @@ public class ControllerExceptionHandler {
 	}
 
 	@ExceptionHandler(CustomApiException.class) // 모든 customValidationException 시 메소드 발동
-	public ResponseEntity<?> apiException(CustomApiException e) { //?자리에 원래 제네릭을 밑에줄과 동일하게 적어야줘되지만 (지금은Map) 그런데 ?를 넣어주면 알아서 들어가게된다
+	public ResponseEntity<?> apiException(CustomApiException e) { 
 		return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(), null),HttpStatus.BAD_REQUEST);
 	}
 }
